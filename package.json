@@ -1,0 +1,51 @@
+{
+  "name": "cdk-sqs-prototype",
+  "version": "0.1.0",
+  "bin": {
+    "cdk-sqs-prototype": "bin/cdk-sqs-prototype.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "bootstrap": "cdk bootstrap --profile h24",
+    "deploy": "cdk deploy --profile h24"
+  },
+  "devDependencies": {
+    "@aws-cdk/assertions": "1.134.0",
+    "@types/aws-lambda": "8.10.85",
+    "@types/jest": "26.0.10",
+    "@types/node": "10.17.27",
+    "aws-cdk": "1.134.0",
+    "aws-sdk": "2.1073.0",
+    "esbuild": "^0.14.27",
+    "jest": "26.4.2",
+    "ts-jest": "26.2.0",
+    "ts-node": "9.0.0",
+    "typescript": "3.9.7"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-appsync": "1.134.0",
+    "@aws-cdk/aws-dynamodb": "1.134.0",
+    "@aws-cdk/aws-lambda": "1.134.0",
+    "@aws-cdk/aws-lambda-event-sources": "1.134.0",
+    "@aws-cdk/aws-lambda-nodejs": "1.134.0",
+    "@aws-cdk/aws-sns": "1.134.0",
+    "@aws-cdk/aws-sns-subscriptions": "1.134.0",
+    "@aws-cdk/aws-sqs": "1.134.0",
+    "@aws-cdk/core": "1.134.0",
+    "@vvo/tzdb": "6.34.0",
+    "add": "2.0.6",
+    "aws-appsync": "4.1.4",
+    "cdk-appsync-transformer": "1.138.3",
+    "cross-fetch": "3.1.5",
+    "date-fns": "2.27.0",
+    "date-fns-tz": "1.1.6",
+    "graphql-tag": "2.12.6",
+    "node-fetch": "2.6.1",
+    "websocket-polyfill": "0.0.3",
+    "ws": "8.5.0",
+    "yarn": "1.22.17"
+  }
+}

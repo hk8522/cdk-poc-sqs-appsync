@@ -1,0 +1,140 @@
+type Auction {
+  id: ID!
+  title: String!
+  status: String!
+  createdAt: AWSDateTime!
+  endAt: AWSDateTime!
+  highestBid: HighestBid!
+  seller: String!
+  updatedAt: AWSDateTime!
+}
+
+type HighestBid {
+  amount: Int
+}
+
+type BidComplete {
+  auctionId: ID
+  bid: Int
+}
+
+type Mutation {
+  placeBid(bid: Int!, auctionId: ID!): String
+  bidComplete(bid: Int!, auctionId: ID!): BidComplete
+  createAuction(input: CreateAuctionInput!): Auction
+  updateAuction(input: UpdateAuctionInput!): Auction
+  deleteAuction(input: DeleteAuctionInput!): Auction
+}
+
+type Subscription {
+  bidCompleteSubscription(auctionId: ID!): BidComplete @aws_subscribe(mutations: ["bidComplete"])
+  onCreateAuction: Auction @aws_subscribe(mutations: ["createAuction"])
+  onUpdateAuction: Auction @aws_subscribe(mutations: ["updateAuction"])
+  onDeleteAuction: Auction @aws_subscribe(mutations: ["deleteAuction"])
+}
+
+input HighestBidInput {
+  amount: Int
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelAuctionConnection {
+  items: [Auction]
+  nextToken: String
+}
+
+input ModelStringFilterInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+}
+
+input ModelIDFilterInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+input ModelIntFilterInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelFloatFilterInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+}
+
+input ModelBooleanFilterInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelAuctionFilterInput {
+  id: ModelIDFilterInput
+  title: ModelStringFilterInput
+  status: ModelStringFilterInput
+  createdAt: ModelStringFilterInput
+  endAt: ModelStringFilterInput
+  seller: ModelStringFilterInput
+  and: [ModelAuctionFilterInput]
+  or: [ModelAuctionFilterInput]
+  not: ModelAuctionFilterInput
+}
+
+type Query {
+  getAuction(id: ID!): Auction
+  listAuctions(filter: ModelAuctionFilterInput, limit: Int, nextToken: String): ModelAuctionConnection
+}
+
+input CreateAuctionInput {
+  id: ID
+  title: String!
+  status: String!
+  createdAt: AWSDateTime
+  endAt: AWSDateTime!
+  highestBid: HighestBidInput!
+  seller: String!
+}
+
+input UpdateAuctionInput {
+  id: ID!
+  title: String
+  status: String
+  createdAt: AWSDateTime
+  endAt: AWSDateTime
+  highestBid: HighestBidInput
+  seller: String
+}
+
+input DeleteAuctionInput {
+  id: ID!
+}

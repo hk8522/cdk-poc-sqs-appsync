@@ -1,0 +1,30 @@
+type Auction @model {
+  id: ID!
+  title: String!
+  status: String!
+  createdAt: AWSDateTime!
+  endAt: AWSDateTime!
+  highestBid: HighestBid!
+  seller: String!
+}
+
+type HighestBid {
+  amount: Int
+}
+
+type BidComplete{
+  auctionId: ID
+  bid: Int
+}
+
+type Mutation {
+  placeBid(bid: Int!, auctionId: ID!): String 
+    @function(name: "placeBid")
+  bidComplete(bid: Int!, auctionId: ID!): BidComplete
+    @custom(request: "mapping-templates/custom-resolvers/Test/request.vtl", response: "mapping-templates/custom-resolvers/Test/response.vtl") 
+}
+
+type Subscription {
+  bidCompleteSubscription(auctionId: ID!): BidComplete
+  @aws_subscribe(mutations: ["bidComplete"])
+}

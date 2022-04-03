@@ -1,20 +1,20 @@
-import { AWSAppSyncClient, AUTH_TYPE } from 'aws-appsync';
-import * as AWS from 'aws-sdk';
-import { gql } from 'graphql-tag';
-import 'cross-fetch/polyfill';
-import 'websocket-polyfill';
+import { AWSAppSyncClient, AUTH_TYPE } from "aws-appsync";
+import * as AWS from "aws-sdk";
+import { gql } from "graphql-tag";
+import "cross-fetch/polyfill";
+import "websocket-polyfill";
 
 let appSyncClient: AWSAppSyncClient<any>;
 
 // create 10 bids for auction 1
-const auction1 = '93b0a562-b5b0-4970-ad64-f2fe12aacb61';
+const auction1 = "93b0a562-b5b0-4970-ad64-f2fe12aacb61";
 
 const start: { [key: string]: number } = {};
 
 async function placeBid(limit: number, auction: string): Promise<void> {
   for (let i = 1; i <= limit; i++) {
     const bid = randomBid();
-    start[i.toString()] = new Date().getTime();
+    start[i] = new Date().getTime();
     const resp = await makeRequest(auction, bid);
     console.log(`Time for get ${i}: ${new Date().getTime() - start[i]} ms`);
   }
@@ -57,11 +57,11 @@ function subscribe(auctionId: string): void {
     variables: {
       auctionId,
     },
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache",
   });
 
   let i = 1;
-  result.subscribe(item => {
+  result.subscribe((item) => {
     console.log(
       `Time for subscription ${i}: ${new Date().getTime() - start[i]} ms`
     );
@@ -71,12 +71,12 @@ function subscribe(auctionId: string): void {
 
 void (async function () {
   appSyncClient = new AWSAppSyncClient({
-    url: 'https://bvutgcbaivep3l7c6kyxcitplq.appsync-api.eu-central-1.amazonaws.com/graphql',
-    region: 'us-east-1',
+    url: "https://bvutgcbaivep3l7c6kyxcitplq.appsync-api.eu-central-1.amazonaws.com/graphql",
+    region: "eu-central-1",
 
     auth: {
       type: AUTH_TYPE.API_KEY,
-      apiKey: 'da2-phe3f5fv25e25jsafheusxifmq',
+      apiKey: "da2-r4zow3ri3rcpvjv4rwvdxvf4nq",
     },
 
     disableOffline: true,

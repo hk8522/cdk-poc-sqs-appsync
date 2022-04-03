@@ -7,7 +7,6 @@ test('SQS Queue Created', () => {
   // WHEN
   const stack = new CdkSqsProtype.CdkSqsProtypeStack(app, 'MyTestStack');
   // THEN
-
   const template = Template.fromStack(stack);
 
   template.hasResourceProperties('AWS::SQS::Queue', {

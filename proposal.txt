@@ -1,0 +1,33 @@
+Account ID: 113126915895
+Name: test-account
+Password: c$[6g[Oq(zQ*)G$
+Access key: AKIARUVXDX43UUTB7IA2
+Secret access key: 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
+
+I gave you just test aws account
+And running steps are below:
+
+
+We have built a small prototype in CDK to test the performance of AppSync. The prototype does the following:
+
+1. The browser places a GraphQL mutation "placeBid" using AppSync.
+
+2. This mutation will trigger a lambda data source. The lambda function in turn places an event in a SQS queue
+
+3. After placing the item in the queue, the lambda returns immediately, and the "placeBid" mutation finishes without error.
+
+4. At the same time, another lambda consumer will retrieve the SQS event, and place an update on the "bidComplete" AppSync type
+
+5. The browser, having subscribed to the "bidCompleteSubscription" GraphQL subscription, retrieves the update and prints a message.
+
+The results of this prototype are intolerably slow. With a 100ms round trip ping to the AWS data centre, we have measured the following response times:
+Browser retrieves the GraphQL mutation response: 216 ms
+Browser retrieves the subscription: 508 ms
+
+Your task is to figure out what is causing these slow response times and to adjust the implementation / configuration of the prototype to achieve better response times. The response time for the mutation should be reduced to <150ms, and the response time for the subscription should be reduced to <200ms (assuming a base ping of 100ms). The new implementation should still use AppSync.
+
+
+====
+The problem with the implementation was because the key expired after 7 days. Here is the new key (just replace in script.ts):
+apiKey: "da2-r4zow3ri3rcpvjv4rwvdxvf4nq",
+
